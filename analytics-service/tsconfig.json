@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "rootDir": "./src",
+    "outDir": "build",
+    "esModuleInterop": true
+  }
+}

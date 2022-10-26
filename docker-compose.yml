@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  analytics:
+    build: ./analytics-service
+    container_name: analytics
+    links:
+      - postgres
+    ports:
+      - 3002:3002
+    volumes:
+      - ./analytics-service:/usr/src/app
+    depends_on:
+      - postgres
+
+  auth:
+    build: ./auth-service
+    container_name: auth
+    links:
+      - analytics
+    ports:
+      - 3000:3000
+    volumes:
+      - ./auth-service:/usr/src/app
+
+  data:
+    build: ./data-service
+    container_name: data
+    links:
+      - analytics
+    ports:
+      - 3001:3001
+    volumes:
+      - ./data-service:/usr/src/app
+
+  postgres:
+    container_name: postgres
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    volumes: 
+      - ./postgresdata:/var/lib/postgresql/data
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: newPassword
+      POSTGRES_DB: ms-db
