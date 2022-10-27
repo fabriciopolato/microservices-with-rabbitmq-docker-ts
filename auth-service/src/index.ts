@@ -7,7 +7,7 @@ import dbConnect from "./config/db";
 
 (async () => {
     const app = express();
-    
+    console.log("ola ola");
     app.use(logger("dev"));
     app.use(express.json());
 

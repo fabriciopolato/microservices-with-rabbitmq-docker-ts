@@ -24,6 +24,8 @@ services:
       - 3000:3000
     volumes:
       - ./auth-service:/usr/src/app
+    environment:
+      DATABASE_URL: postgres://postgres:newPassword@postgres:5432/ms-db
     networks:
       - servicesnet
     depends_on:

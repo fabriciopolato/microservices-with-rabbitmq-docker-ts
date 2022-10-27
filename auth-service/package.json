@@ -5,8 +5,10 @@
   "main": "build/index.js",
   "scripts": {
     "dev": "nodemon --watch 'src/' --exec 'ts-node src/index.ts' -e ts",
-    "docker": "npm run build && nodemon ./build/index.js",
-    "build": "npx tsc",
+    "docker": "nodemon ./build/index.js",
+    "build": "npx tsc && cp -r ./src/sql ./build",
+    "migrate:db": "npm run build && node ./build/scripts/runMigrations.js",
+    "drop:db": "npm run build && node ./build/scripts/dropTables.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

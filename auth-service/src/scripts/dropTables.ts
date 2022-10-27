@@ -1,15 +1,15 @@
-import fs from "fs";
-import { promisify } from "util";
-import dbConnect from "../../config/db";
+import fs from "fs/promises";
+import path from "path";
+import dbConnect from "../config/db";
 
 const getMigrations = async () => {
-    const files = await promisify(fs.readdir)(__dirname);
+    const files = await fs.readdir(path.join(__dirname, "..", "sql", "dropTables"));
     const sql = await Promise.all(
         files
             .filter((file) => file.split(".")[1] === "sql")
             .map(async (file) => ({
                 file,
-                query: await promisify(fs.readFile)(`${__dirname}/${file}`, { encoding: "utf-8", }),
+                query: await fs.readFile(path.join(__dirname, "..", "sql","dropTables", file), { encoding: "utf-8", }),
             }))
     );
   
